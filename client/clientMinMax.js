@@ -1,3 +1,6 @@
+const MiniMax = require('./MiniMax');
+const N = 8;
+var tileRep = ['_', 'X', 'O'];
 
 const io = require('socket.io-client');
 
@@ -18,7 +21,7 @@ const humanBoard = (board) => {
     if(i % N === 0){
       result += '\n\n ' + (parseInt(Math.floor(i / N)) + 1) + ' ';
     }
-    result += ' ' + tileRep[board[i]] + ' ';
+    result += ' ' + board[i] + ' ';
   }
   return result;
 }
@@ -37,7 +40,7 @@ const validateHumanPosition = (position) => {
 }
 
 const socket = io.connect('http://localhost:4000');
-const username = 'javierRANDOM' + randInt(0, 9999); 
+const username = 'javier' + randInt(0, 9999); 
 const tournament_id = 12;
 
 socket.on('connect', () => {
@@ -63,10 +66,13 @@ socket.on('ready', (data) => {
     }
   }
 
-  console.log(board);
-  console.log(playerTurnID);
+  const position = MiniMax.BestMove(board, playerTurnID);
 
-  const movement = possibles[randInt(0, possibles.length)];
+  const movement = position.x + MiniMax.SIZE*position.y;
+  /* console.log(humanBoard(board));
+  console.log('player:', playerTurnID);
+  console.log(position);
+  console.log(movement); */
 
   socket.emit('play', {
     tournament_id: tournament_id,
