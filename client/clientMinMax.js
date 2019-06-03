@@ -39,9 +39,9 @@ const validateHumanPosition = (position) => {
   return false;
 }
 
-const socket = io.connect('http://localhost:4000');
+const socket = io.connect('http://192.168.1.148:4000');
 const username = 'javier' + randInt(0, 9999); 
-const tournament_id = 12;
+const tournament_id = 142857;
 
 socket.on('connect', () => {
   console.log('connect');

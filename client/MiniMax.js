@@ -160,7 +160,7 @@ const MiniMaxAlphaBeta = (
       const position = getXY(i);
       if (validMove(board, position.x, position.y, player)) { 
         const [boardTemp, totctr] = makeMove(board.slice(), position.x, position.y, player);
-        v = Math.max(v, MiniMaxAlphaBeta(
+        v = Math.min(v, MiniMaxAlphaBeta(
           boardTemp,
           player,
           depth-1,
@@ -168,7 +168,7 @@ const MiniMaxAlphaBeta = (
           beta,
           true,
         ));
-        alpha = Math.max(alpha, v);
+        alpha = Math.min(alpha, v);
         if (beta <= alpha) {
           break;
         }
@@ -190,8 +190,8 @@ exports.BestMove = (board, player) => {
       const points = MiniMaxAlphaBeta(
         boardTemp,
         player,
-        12,
-        -9999,
+        4,
+        -1,
         9999,
         true,
       );
